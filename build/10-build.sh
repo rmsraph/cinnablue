@@ -66,6 +66,7 @@ gpgcheck=1
 gpgkey=https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 EOF
 
+rm -rf /opt/brave.com
 dnf5 install -y brave-browser
 rm -f /etc/yum.repos.d/brave-browser.repo
 
