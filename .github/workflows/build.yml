@@ -106,10 +106,10 @@ jobs:
           sep-annotations: " "
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@e81de5d261d9c6b9565f5c6f29b8d3f71f0e7f1d # v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@4d7a8e4dca6c182a8a6a8f77773e8f3f6b5cb4e3 # v3
+        uses: docker/setup-buildx-action@v4
 
       # SBOM (OPTIONAL): Software Bill of Materials generation using Syft
       # Creates a detailed inventory of all software components in the image for supply chain security.
