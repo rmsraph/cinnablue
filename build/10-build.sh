@@ -52,6 +52,12 @@ install_if_available() {
 	return 1
 }
 
+# Refresh repository metadata and GPG keys to avoid transient signature failures
+dnf5 clean all
+rm -rf /var/cache/libdnf5/*
+dnf5 makecache --refresh
+rpm --import /etc/pki/rpm-gpg/* || true
+
 # Install Cinnamon desktop environment
 echo "Installing Cinnamon desktop..."
 
