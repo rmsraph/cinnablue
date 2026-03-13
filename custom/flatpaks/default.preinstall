@@ -7,6 +7,9 @@
 [Flatpak Preinstall org.mozilla.firefox]
 Branch=stable
 
+[Flatpak Preinstall com.brave.Browser]
+Branch=stable
+
 [Flatpak Preinstall org.mozilla.Thunderbird]
 Branch=stable
 

@@ -52,30 +52,6 @@ install_if_available() {
 	return 1
 }
 
-# Install Brave Browser from official repository
-echo "Installing Brave Browser..."
-
-# Clean package manager cache before installing Brave
-dnf5 clean all
-rm -rf /var/cache/libdnf5/*
-
-rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-
-cat > /etc/yum.repos.d/brave-browser.repo << 'EOF'
-[brave-browser]
-name=Brave Browser
-baseurl=https://brave-browser-rpm-release.s3.brave.com/$basearch
-enabled=1
-gpgcheck=1
-gpgkey=https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-EOF
-
-rm -rf /opt/brave.com
-dnf5 install -y brave-browser
-rm -f /etc/yum.repos.d/brave-browser.repo
-
-echo "Brave Browser installed"
-
 # Install Cinnamon desktop environment
 echo "Installing Cinnamon desktop..."
 
