@@ -111,26 +111,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@4d7a8e4dca6c182a8a6a8f77773e8f3f6b5cb4e3 # v3
 
-      - name: Build Image
-        id: build_image
-        uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
-        with:
-          containerfiles: |
-            ./Containerfile
-          # Postfix image name with -custom to make it a little more descriptive
-          # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
-          image: ${{ env.IMAGE_NAME }}
-          tags: ${{ env.DEFAULT_TAG }}
-          labels: ${{ steps.metadata.outputs.labels }}
-          oci: false
-
-      # Tag for registry
-      - name: Tag for registry
-        run: |
-          for tag in ${{ steps.metadata.outputs.tags }}; do
-            podman tag ${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }} ${{ env.IMAGE_NAME }}:$tag
-          done
-
       # SBOM (OPTIONAL): Software Bill of Materials generation using Syft
       # Creates a detailed inventory of all software components in the image for supply chain security.
       # To enable:
