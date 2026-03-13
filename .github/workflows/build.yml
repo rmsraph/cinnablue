@@ -78,6 +78,7 @@ jobs:
         uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5
         id: metadata
         with:
+          images: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}
           # This generates all the tags for your image, you can add custom tags here too!
           # Default tags are "$DEFAULT_TAG" and "$DEFAULT_TAG.$date".
           tags: |
@@ -102,8 +103,13 @@ jobs:
             io.artifacthub.package.logo-url=${{ env.IMAGE_LOGO_URL }}
             io.artifacthub.package.prerelease=false
             containers.bootc=1
-          sep-tags: " "
           sep-annotations: " "
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@e81de5d261d9c6b9565f5c6f29b8d3f71f0e7f1d # v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@4d7a8e4dca6c182a8a6a8f77773e8f3f6b5cb4e3 # v3
 
       - name: Build Image
         id: build_image
@@ -161,19 +167,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push To GHCR
-        uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        id: push
-        env:
-          REGISTRY_USER: ${{ github.actor }}
-          REGISTRY_PASSWORD: ${{ github.token }}
+      - name: Build and push multi-arch image
+        id: build_image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b6e3ac259d8d67585f671 # v6
         with:
-          registry: ${{ env.IMAGE_REGISTRY }}
-          image: ${{ env.IMAGE_NAME }}
+          context: .
+          file: ./Containerfile
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
           tags: ${{ steps.metadata.outputs.tags }}
-          username: ${{ env.REGISTRY_USER }}
-          password: ${{ env.REGISTRY_PASSWORD }}
+          labels: ${{ steps.metadata.outputs.labels }}
 
       # OPTIONAL: Image Signing with Cosign
       # Signing is disabled by default. To enable, see README.md "Optional: Enable Image Signing" section.
