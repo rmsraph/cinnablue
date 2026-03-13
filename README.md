@@ -21,7 +21,7 @@ Here are the changes from **Bluefin**. Cinablue is based on Bluefin and includes
 
 ### Configuration Changes
 - `lightdm.service` is enabled and graphical target is set in `build/10-build.sh`.
-- Cinnamon defaults (theme, icons, cursor, wallpaper) are preconfigured via dconf.
+- Cinnamon defaults (theme, icons, cursor, wallpaper, panel size, applet order, and clock format) are preconfigured via dconf.
 
 *Last updated: 2026-03-13*
 
