@@ -55,6 +55,10 @@ install_if_available() {
 # Install Brave Browser from official repository
 echo "Installing Brave Browser..."
 
+# Clean package manager cache before installing Brave
+dnf5 clean all
+rm -rf /var/cache/libdnf5/*
+
 rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
 cat > /etc/yum.repos.d/brave-browser.repo << 'EOF'
