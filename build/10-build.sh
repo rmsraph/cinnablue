@@ -126,29 +126,6 @@ fi
 
 echo "Bibata cursor installed"
 
-# Install Linux Mint wallpaper
-echo "Installing Linux Mint wallpaper..."
-
-mkdir -p /usr/share/backgrounds/cinablue
-MINT_WALLPAPER_PATH=""
-
-if install_if_available mint-backgrounds; then
-	MINT_WALLPAPER_PATH="$(find /usr/share/backgrounds -type f \( -iname '*mint*.jpg' -o -iname '*mint*.jpeg' -o -iname '*mint*.png' \) | head -n 1 || true)"
-fi
-
-if [ -z "$MINT_WALLPAPER_PATH" ]; then
-	tmp_mint_backgrounds="$(mktemp -d)"
-	curl -fsSL https://github.com/linuxmint/mint-backgrounds/archive/refs/heads/master.tar.gz | tar -xzf - -C "$tmp_mint_backgrounds"
-	MINT_WALLPAPER_SOURCE="$(find "$tmp_mint_backgrounds" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) | head -n 1 || true)"
-	if [ -n "$MINT_WALLPAPER_SOURCE" ]; then
-		cp "$MINT_WALLPAPER_SOURCE" /usr/share/backgrounds/cinablue/linux-mint.jpg
-		MINT_WALLPAPER_PATH="/usr/share/backgrounds/cinablue/linux-mint.jpg"
-	fi
-	rm -rf "$tmp_mint_backgrounds"
-fi
-
-echo "Linux Mint wallpaper installed"
-
 echo "::endgroup::"
 
 echo "::group:: System Configuration"
