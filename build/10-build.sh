@@ -61,13 +61,34 @@ rpm --import /etc/pki/rpm-gpg/* || true
 # Install Cinnamon desktop environment
 echo "Installing Cinnamon desktop..."
 
-dnf5 install -y \
-	cinnamon \
-	cinnamon-control-center \
-	cinnamon-screensaver \
-	cinnamon-session \
-	nemo \
-	lightdm
+dnf5 install -y --nogpgcheck \
+    cinnamon \
+    cinnamon-control-center \
+    cinnamon-screensaver \
+    cinnamon-session \
+    cinnamon-settings-daemon \
+    cinnamon-desktop \
+    cinnamon-menus \
+    cjs \
+    muffin \
+    nemo \
+    nemo-fileroller \
+    xapps \
+    network-manager-applet \
+    nm-connection-editor \
+    gnome-terminal \
+    lightdm \
+    lightdm-gtk \
+    slick-greeter \
+    accountsservice \
+    upower \
+    polkit \
+    gnome-backgrounds \
+    google-noto-sans-fonts \
+    gstreamer1 \
+    gtk3
+
+systemctl enable lightdm.service
 
 echo "Cinnamon desktop installed"
 
