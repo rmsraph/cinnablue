@@ -1,12 +1,29 @@
 # cinablue
 
-A template for building custom bootc operating system images based on the lessons from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io). It is designed to be used manually, but is optimized to be bootstraped by GitHub Copilot. After set up you'll have your own custom Linux. 
+A custom bootc operating system image based on [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io), bootstrapped as **Cinablue**.
 
-This template uses the **multi-stage build architecture** from , combining resources from multiple OCI containers for modularity and maintainability. See the [Architecture](#architecture) section below for details.
+This repository uses the same **multi-stage build architecture** pattern used by Bluefin, combining local customizations with OCI-provided system files for modularity and maintainability. See [Architecture](#architecture) below.
 
-**Unlike previous templates, you are not modifying Bluefin and making changes.**: You are assembling your own Bluefin in the same exact way that Bluefin, Aurora, and Bluefin LTS are built. This is way more flexible and better for everyone since the image-agnostic and desktop things we love about Bluefin lives in @projectbluefin/common. 
+## What Makes this Raptor Different?
 
- Instead, you create your own OS repository based on this template, allowing full customization while leveraging Bluefin's robust build system and shared components.
+Here are the changes from **Bluefin**. Cinablue is based on Bluefin and includes these customizations:
+
+### Added Packages (Build-time)
+- **Cinnamon desktop stack**: cinnamon, muffin, cjs, xapps, nemo, lightdm/slick-greeter for a Cinnamon-first session.
+- **Desktop integration packages**: network-manager applet/editor, fonts, GTK and multimedia runtime components required by the desktop session.
+
+### Added Applications (Runtime)
+- **CLI tools (Homebrew)**: curated via `custom/brew/*.Brewfile` and installable through `ujust` commands.
+- **GUI apps (Flatpak)**: curated preinstall list in `custom/flatpaks/default.preinstall`.
+
+### Removed/Disabled
+- No Bluefin core developer workflow was removed intentionally; Cinablue keeps Bluefin base and Developer Experience defaults as the foundation.
+
+### Configuration Changes
+- `lightdm.service` is enabled and graphical target is set in `build/10-build.sh`.
+- Cinnamon defaults (theme, icons, cursor, wallpaper) are preconfigured via dconf.
+
+*Last updated: 2026-03-13*
 
 > Be the one who moves, not the one who is moved.
 
@@ -16,10 +33,10 @@ Here are the steps to guide copilot to make your own repo, or just use it like a
 
 1. Click the green "Use this as a template" button and create a new repository
 2. Select your owner, pick a repo name for your OS, and a description
-3. In the "Jumpstart your project with Copilot (optional)" add this, modify to your liking:
+3. In the "Jumpstart your project with Copilot (optional)" field, you can use:
 
 ```
-Use @projectbluefin/finpilot as a template, name the OS the repository name. Ensure the entire operating system is bootstrapped. Ensure all github actions are enabled and running.  Ensure the README has the github setup instructions for cosign and the other steps required to finish the task.
+Use @projectbluefin/finpilot as a template, name the OS Cinablue. Ensure the entire operating system is bootstrapped. Ensure all GitHub Actions are enabled and running. Ensure the README has GitHub setup instructions for cosign and other finalization steps. Make Base and DeveloperXperience like Bluefin.
 ```
 
 ## What's Included
@@ -65,21 +82,26 @@ Use @projectbluefin/finpilot as a template, name the OS the repository name. Ens
 
 Click "Use this template" to create a new repository from this template.
 
-### 2. Rename the Project
+### 2. Project Identity (Cinablue)
 
-Important: Change `finpilot` to your repository name in these 6 files:
+This repository is already initialized as **Cinablue** in:
 
-1. `Containerfile` (line 4): `# Name: your-repo-name`
-2. `Justfile` (line 1): `export image_name := env("IMAGE_NAME", "your-repo-name")`
-3. `README.md` (line 1): `# your-repo-name`
-4. `artifacthub-repo.yml` (line 5): `repositoryID: your-repo-name`
-5. `custom/ujust/README.md` (~line 175): `localhost/your-repo-name:stable`
-6. `.github/workflows/clean.yml` (line 23): `packages: your-repo-name`
+1. `Containerfile` (`# Name: cinablue`)
+2. `Justfile` (`image_name := ... "cinablue"`)
+3. `README.md` (`# cinablue`)
+4. `artifacthub-repo.yml` (`repositoryID: cinablue`)
+5. `custom/ujust/README.md` (`localhost/cinablue:stable`)
+6. `.github/workflows/clean.yml` (`packages: cinablue`)
 
 ### 3. Enable GitHub Actions
 
 - Go to the "Actions" tab in your repository
 - Click "I understand my workflows, go ahead and enable them"
+- Go to Settings -> Actions -> General and set Workflow permissions to **Read and write permissions**
+
+Verify workflows are running:
+- Open Actions and confirm successful runs for `Build container image` and validation workflows.
+- Optional CLI check: `gh run list --limit 10`
 
 Your first build will start automatically! 
 

@@ -3,11 +3,13 @@
 ## Initial Setup
 
 ### 1. Rename Template
-- [ ] Update `finpilot` to your name in: Containerfile, Justfile, README.md, artifacthub-repo.yml
+- [ ] Confirm repository identity is `cinablue` in: Containerfile, Justfile, README.md, artifacthub-repo.yml, custom/ujust/README.md, .github/workflows/clean.yml
 
 ### 2. Enable GitHub Actions
 - [ ] Settings → Actions → General → Enable workflows
 - [ ] Set "Read and write permissions"
+- [ ] Run `Build container image` via `workflow_dispatch` and verify it completed successfully
+- [ ] Confirm validation workflows are green on latest commit
 
 ### 3. First Push
 ```bash
