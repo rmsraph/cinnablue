@@ -69,6 +69,8 @@ dnf5 install -y --nogpgcheck \
     cinnamon-settings-daemon \
     cinnamon-desktop \
     cinnamon-menus \
+    cinnamon-translations \
+    plymouth \
     cjs \
     muffin \
     nemo \
@@ -88,9 +90,10 @@ dnf5 install -y --nogpgcheck \
     gstreamer1 \
     gtk3
 
-systemctl enable lightdm.service
+mkdir -p /usr/share
+cp -a /ctx/system/shared/usr/share/cinnamon /usr/share/
 
-echo "Cinnamon desktop installed"
+echo "Cinnamon desktop installed and configured"
 
 # Install Linux Mint theme and icons
 echo "Installing Linux Mint theme and icons..."
@@ -120,9 +123,10 @@ echo "Linux Mint theme and icons installed"
 # Install Bibata Modern Classic (black) cursor
 echo "Installing Bibata cursor..."
 
-if ! install_if_available bibata-cursor-themes; then
-	copr_install_isolated "peterwu/rendezvous" bibata-cursor-themes
-fi
+tmp_bibata_cursor="$(mktemp -d)"
+curl -fsSL https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Classic.tar.xz | tar -xJf - -C "$tmp_bibata_cursor"
+mv "$tmp_bibata_cursor"/Bibata-* /usr/share/icons/
+rm -rf "$tmp_bibata_cursor"
 
 echo "Bibata cursor installed"
 
@@ -131,40 +135,10 @@ echo "::endgroup::"
 echo "::group:: System Configuration"
 
 # Enable/disable systemd services
+systemctl disable gdm.service
 systemctl enable podman.socket
 systemctl enable lightdm.service
 systemctl set-default graphical.target
-
-# Set Cinnamon defaults (theme, icon, cursor, wallpaper, panel and clock)
-mkdir -p /etc/dconf/db/local.d
-cat > /etc/dconf/db/local.d/00-cinnamon-defaults << EOF
-[org/cinnamon/theme]
-name='Mint-Y'
-
-[org/cinnamon]
-# Order applets by panel zone and position: menu, task list, tray, clock, show desktop.
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0','panel1:left:1:grouped-window-list@cinnamon.org:0','panel1:right:0:systray@cinnamon.org:0','panel1:right:1:xapp-status@cinnamon.org:0','panel1:right:2:notifications@cinnamon.org:0','panel1:right:3:printers@cinnamon.org:0','panel1:right:4:removable-drives@cinnamon.org:0','panel1:right:5:keyboard@cinnamon.org:0','panel1:right:6:network@cinnamon.org:0','panel1:right:7:sound@cinnamon.org:0','panel1:right:8:power@cinnamon.org:0','panel1:right:9:calendar@cinnamon.org:0','panel1:right:10:show-desktop@cinnamon.org:0']
-# Keep compatibility with Cinnamon variants that read either key.
-panel-height=40
-panels-height=["1:40"]
-
-[org/cinnamon/desktop/interface]
-gtk-theme='Mint-Y'
-icon-theme='Mint-Y'
-cursor-theme='Bibata-Modern-Classic'
-clock-use-24h=true
-clock-show-date=true
-
-[org/cinnamon/desktop/background]
-picture-uri='file://${MINT_WALLPAPER_PATH:-/usr/share/backgrounds/cinablue/linux-mint.jpg}'
-picture-options='zoom'
-
-[org/cinnamon/applets/calendar]
-use-custom-format=true
-custom-format='%a, %H:%M%n%d/%m/%Y'
-EOF
-dconf update
-# Example: systemctl mask unwanted-service
 
 echo "::endgroup::"
 

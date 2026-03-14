@@ -1,0 +1,33 @@
+{
+    "description": "Yahoo",
+    "uuid": "yahoo@linuxmint.com",
+    "name": "Yahoo",
+    "supported_locales": ["de", "en_CA", "en_GB", "en_IE", "en_IN", "en_SG", "en_US", "es_AR", "es_CL", "es_ES", "es_MX", "es_US", "fi", "fr", "hi-IN", "id", "it", "nl", "pt_BR", "sv_SE", "th", "vi", "zh_TW"],
+    "locale_data": {
+        "url": {
+            "de": "https://de.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "en_CA": "https://ca.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "en_GB": "https://uk.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "en_IE": "https://uk.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "en_IN": "https://in.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "en_SG": "https://sg.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "en_US": "https://search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "es_AR": "https://ar.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "es_CL": "https://cl.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "es_ES": "https://es.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "es_MX": "https://mx.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "es_US": "https://espanol.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "fi": "https://fi.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "fr": "https://fr.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "hi_IN": "https://in.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "id": "https://id.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "it": "https://it.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "nl": "https://nl.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "pt_BR": "https://br.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "sv_SE": "https://se.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "th": "https://th.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "vi": "https://vn.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s",
+            "zh_TW": "https://tw.search.yahoo.com/yhs/search?hspart=ddc&hsimp=yhs-linuxmint&type=__alt__ddc_linuxmint_com&p=%s"
+        }
+    }
+}
