@@ -48,7 +48,7 @@ COPY --from=ghcr.io/ublue-os/brew:latest@sha256:ca91068f51ce663d495ccfc829352d66
 #FROM ghcr.io/ublue-os/silverblue-main:latest@sha256:f8d5fd28aa7bb0ed9e17e98e4f9fb174b6961a2dc4a3113b78c5dff4af5bdf6f
 
 ## Alternative base images, no desktop included (uncomment to use):
-FROM ghcr.io/ublue-os/base-main:latest
+FROM ghcr.io/ublue-os/base-main:latest@sha256:52993252d4d972436fce53b28d458d48a7bff3bd68358c9d8941a3930c5caa55
 # FROM quay.io/centos-bootc/centos-bootc:stream10
 
 ## Alternative GNOME OS base image (uncomment to use):
