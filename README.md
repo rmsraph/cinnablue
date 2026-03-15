@@ -1,4 +1,4 @@
-# finpilot
+# cinnablue
 
 A template for building custom bootc operating system images based on the lessons from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io). It is designed to be used manually, but is optimized to be bootstraped by GitHub Copilot. After set up you'll have your own custom Linux. 
 
@@ -19,7 +19,7 @@ Here are the steps to guide copilot to make your own repo, or just use it like a
 3. In the "Jumpstart your project with Copilot (optional)" add this, modify to your liking:
 
 ```
-Use @projectbluefin/finpilot as a template, name the OS the repository name. Ensure the entire operating system is bootstrapped. Ensure all github actions are enabled and running.  Ensure the README has the github setup instructions for cosign and the other steps required to finish the task.
+Use @projectbluefin/finpilot as a template, name the OS cinnablue, and fully bootstrap the operating system. Ensure all GitHub Actions are enabled and running, and ensure the README includes GitHub setup instructions for Cosign plus all remaining steps to finish setup.
 ```
 
 ## What's Included
@@ -67,7 +67,7 @@ Click "Use this template" to create a new repository from this template.
 
 ### 2. Rename the Project
 
-Important: Change `finpilot` to your repository name in these 6 files:
+Important: This repository is preconfigured for `cinnablue`. If you rename it again, update these 6 files:
 
 1. `Containerfile` (line 4): `# Name: your-repo-name`
 2. `Justfile` (line 1): `export image_name := env("IMAGE_NAME", "your-repo-name")`
@@ -80,6 +80,8 @@ Important: Change `finpilot` to your repository name in these 6 files:
 
 - Go to the "Actions" tab in your repository
 - Click "I understand my workflows, go ahead and enable them"
+- Trigger one manual run from Actions for `build.yml` (or push a commit)
+- Confirm all workflows appear and run successfully: `build.yml`, `clean.yml`, `renovate.yml`, `validate-shellcheck.yml`, `validate-renovate.yml`, `validate-justfiles.yml`, `validate-flatpaks.yml`, `validate-brewfiles.yml`
 
 Your first build will start automatically! 
 
