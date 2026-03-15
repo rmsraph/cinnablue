@@ -73,28 +73,34 @@ echo "::endgroup::"
 echo "::group:: Install Cinnamon Desktop Environment"
 # Install Cinnamon desktop environment and related packages
 
-# Install Cinnamon from comps group when available (pulls desktop dependencies).
-if dnf5 group info "Cinnamon Desktop" >/dev/null 2>&1; then
-	dnf5 group install -y "Cinnamon Desktop"
-elif dnf5 group info cinnamon-desktop-environment >/dev/null 2>&1; then
-	dnf5 group install -y cinnamon-desktop-environment
-else
-	# Fallback package set if comps metadata/group names differ.
-	dnf5 install -y \
-		cinnamon \
-		cinnamon-control-center \
-		cinnamon-screensaver \
-		cinnamon-session \
-		cinnamon-settings-daemon \
-		cinnamon-desktop \
-		nemo \
-		muffin \
-		xed \
-		xreader \
-		xviewer \
-		lightdm \
-		slick-greeter
-fi
+# Fedora Silverblue metadata may not expose a Cinnamon comps group.
+# Install Cinnamon by package name and let dnf resolve dependencies.
+cinnamon_core_pkgs=(
+	cinnamon
+	cinnamon-session
+	cinnamon-desktop
+	cinnamon-settings-daemon
+	nemo
+	muffin
+	lightdm
+	slick-greeter
+)
+
+cinnamon_optional_pkgs=()
+for pkg in \
+	cinnamon-control-center \
+	cinnamon-screensaver \
+	xed \
+	xreader \
+	xviewer \
+	gnome-keyring \
+	network-manager-applet; do
+	if dnf5 list --available "$pkg" >/dev/null 2>&1; then
+		cinnamon_optional_pkgs+=("$pkg")
+	fi
+done
+
+dnf5 install -y "${cinnamon_core_pkgs[@]}" "${cinnamon_optional_pkgs[@]}"
 
 # Ensure a login manager exists even if the comps group did not pull one.
 dnf5 install -y lightdm slick-greeter
