@@ -11,7 +11,6 @@ echo "::group:: Remove GNOME Desktop"
 dnf5 remove -y \
     gnome-shell \
     gnome-shell-extension* \
-    gnome-terminal \
     gnome-software \
     gnome-control-center \
     nautilus \
@@ -24,12 +23,11 @@ echo "::group:: Install Cinnamon Desktop"
 
 # Install Cinnamon desktop from System76's COPR
 # Using isolated pattern to prevent COPR from persisting
-copr_install_isolated "ryanabx/cinnamon-6.6.x" \
+copr_install_isolated "leigh123linux/cinnamon-6.6.x" \
     cinnamon \
     cinnamon-session \
     cinnamon-desktop \
     cinnamon-settings-daemon \
-    dconf \
     nemo \
     muffin \
     lightdm \
@@ -38,9 +36,6 @@ copr_install_isolated "ryanabx/cinnamon-6.6.x" \
 	cinnamon-screensaver \
 	xed \
 	xreader \
-	xviewer \
-	gnome-keyring \
-	network-manager-applet \
     mint-themes \
     mint-y-icons
 
@@ -71,7 +66,6 @@ echo "::group:: Install Additional Utilities"
 # Install additional utilities that work well with Cinnamon
 dnf5 install -y \
     kitty \
-    flatpak \
     xdg-desktop-portal-xapp
 
 echo "Additional utilities installed"

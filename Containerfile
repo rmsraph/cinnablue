@@ -45,7 +45,7 @@ COPY --from=ghcr.io/projectbluefin/common:latest@sha256:9409d0c08bf76bdfef52812d
 COPY --from=ghcr.io/ublue-os/brew:latest@sha256:ca91068f51ce663d495ccfc829352d6621ec95f6c7db447ade55023b222f9762 /system_files /oci/brew
 
 ## Bluefin DX image with GNOME and Fedora base:
-FROM ghcr.io/ublue-os/bluefin-dx:latest
+FROM ghcr.io/ublue-os/bluefin-dx:stable
 
 ### /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
@@ -73,7 +73,10 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build/10-build.sh
+    /ctx/build/10-build.sh && \
+    /ctx/build/20-cinnamon.sh
+    # && \
+    #/ctx/build/90-clean.sh
     
 ### LINTING
 ## Verify final image and contents are correct.
