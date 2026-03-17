@@ -4,6 +4,9 @@
 # See: https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-preinstall
 
 # Web Browsers
+[Flatpak Preinstall com.brave.Browser]
+branch=stable
+
 [Flatpak Preinstall org.mozilla.firefox]
 Branch=stable
 

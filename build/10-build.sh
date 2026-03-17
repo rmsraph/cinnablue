@@ -41,13 +41,32 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
-echo "::group:: Install Packages"
+echo "::group:: Install Graphics Stack"
 
-# Install packages using dnf5
-# Example: dnf5 install -y tmux
+# Install session/graphics compatibility packages when available.
+graphics_pkgs=()
+for pkg in \
+	xorg-x11-server-Xorg \
+	xorg-x11-server-Xwayland \
+	xorg-x11-drivers \
+	xorg-x11-xinit \
+	xorg-x11-xauth \
+	xorg-x11-xrandr \
+	xorg-x11-xkb-utils \
+	mesa-dri-drivers \
+	mesa-vulkan-drivers \
+	vulkan-loader \
+	gnome-terminal \
+	network-manager-applet \
+	policycoreutils-python-utils; do
+	if dnf5 list --available "$pkg" >/dev/null 2>&1; then
+		graphics_pkgs+=("$pkg")
+	fi
+done
 
-# Example using COPR with isolated pattern:
-# copr_install_isolated "ublue-os/staging" package-name
+if ((${#graphics_pkgs[@]})); then
+	dnf5 install -y "${graphics_pkgs[@]}"
+fi
 
 echo "::endgroup::"
 
@@ -55,6 +74,7 @@ echo "::group:: System Configuration"
 
 # Enable/disable systemd services
 systemctl enable podman.socket
+systemctl set-default graphical.target
 # Example: systemctl mask unwanted-service
 
 echo "::endgroup::"
