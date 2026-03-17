@@ -70,58 +70,10 @@ fi
 
 echo "::endgroup::"
 
-echo "::group:: Install Cinnamon Desktop Environment"
-# Install Cinnamon desktop environment and related packages
-
-# Fedora Silverblue metadata may not expose a Cinnamon comps group.
-# Install Cinnamon by package name and let dnf resolve dependencies.
-cinnamon_core_pkgs=(
-	cinnamon
-	cinnamon-session
-	cinnamon-desktop
-	cinnamon-settings-daemon
-	nemo
-	muffin
-	lightdm
-	slick-greeter
-)
-
-cinnamon_optional_pkgs=()
-for pkg in \
-	cinnamon-control-center \
-	cinnamon-screensaver \
-	xed \
-	xreader \
-	xviewer \
-	gnome-keyring \
-	network-manager-applet; do
-	if dnf5 list --available "$pkg" >/dev/null 2>&1; then
-		cinnamon_optional_pkgs+=("$pkg")
-	fi
-done
-
-dnf5 install -y "${cinnamon_core_pkgs[@]}" "${cinnamon_optional_pkgs[@]}"
-
-# Ensure a login manager exists even if the comps group did not pull one.
-dnf5 install -y lightdm slick-greeter
-
-echo "::endgroup::"
-
-echo "::group:: Install Packages"
-
-# Install packages using dnf5
-# Example: dnf5 install -y tmux
-
-# Example using COPR with isolated pattern:
-# copr_install_isolated "ublue-os/staging" package-name
-
-echo "::endgroup::"
-
 echo "::group:: System Configuration"
 
 # Enable/disable systemd services
 systemctl enable podman.socket
-systemctl enable lightdm.service
 systemctl set-default graphical.target
 # Example: systemctl mask unwanted-service
 

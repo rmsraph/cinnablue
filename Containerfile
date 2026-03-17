@@ -44,15 +44,8 @@ COPY custom /custom
 COPY --from=ghcr.io/projectbluefin/common:latest@sha256:9409d0c08bf76bdfef52812db61a68453b20b23b52042e810a447ada3c72c9c1 /system_files /oci/common
 COPY --from=ghcr.io/ublue-os/brew:latest@sha256:ca91068f51ce663d495ccfc829352d6621ec95f6c7db447ade55023b222f9762 /system_files /oci/brew
 
-# Base Image - GNOME included
-#FROM ghcr.io/ublue-os/silverblue-main:latest@sha256:f8d5fd28aa7bb0ed9e17e98e4f9fb174b6961a2dc4a3113b78c5dff4af5bdf6f
-
-## Alternative base images, no desktop included (uncomment to use):
-FROM ghcr.io/ublue-os/base-main:latest@sha256:52993252d4d972436fce53b28d458d48a7bff3bd68358c9d8941a3930c5caa55
-# FROM quay.io/centos-bootc/centos-bootc:stream10
-
-## Alternative GNOME OS base image (uncomment to use):
-# FROM quay.io/gnome_infrastructure/gnome-build-meta:gnomeos-nightly
+## Bluefin DX image with GNOME and Fedora base:
+FROM ghcr.io/ublue-os/bluefin-dx:latest
 
 ### /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
