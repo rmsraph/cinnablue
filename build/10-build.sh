@@ -33,7 +33,7 @@ mkdir -p /usr/share/ublue-os/homebrew/
 cp /ctx/custom/brew/*.Brewfile /usr/share/ublue-os/homebrew/
 
 # Consolidate Just Files
-find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
+find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >>/usr/share/ublue-os/just/60-custom.just
 
 # Copy Flatpak preinstall files
 mkdir -p /etc/flatpak/preinstall.d/
@@ -66,6 +66,40 @@ done
 
 if ((${#graphics_pkgs[@]})); then
 	dnf5 install -y "${graphics_pkgs[@]}"
+fi
+
+echo "::endgroup::"
+
+echo "::group:: Ensure UEFI Boot Artifacts"
+
+# bootc-image-builder infers the UEFI vendor from shim/EFI paths inside
+# the source image. Ensure the architecture-specific UEFI packages exist
+# so ARM64 ISO builds don't fail with missing UEFI vendor.
+uefi_pkgs=()
+arch="$(uname -m)"
+
+if [[ "$arch" == "aarch64" ]]; then
+	for pkg in \
+		shim-aa64 \
+		grub2-efi-aa64 \
+		grub2-efi-aa64-modules; do
+		if dnf5 list --available "$pkg" >/dev/null 2>&1; then
+			uefi_pkgs+=("$pkg")
+		fi
+	done
+elif [[ "$arch" == "x86_64" ]]; then
+	for pkg in \
+		shim-x64 \
+		grub2-efi-x64 \
+		grub2-efi-x64-modules; do
+		if dnf5 list --available "$pkg" >/dev/null 2>&1; then
+			uefi_pkgs+=("$pkg")
+		fi
+	done
+fi
+
+if ((${#uefi_pkgs[@]})); then
+	dnf5 install -y "${uefi_pkgs[@]}"
 fi
 
 echo "::endgroup::"
