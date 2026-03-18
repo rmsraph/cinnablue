@@ -115,7 +115,6 @@ jobs:
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ steps.metadata.outputs.tags }}
-          archs: amd64,arm64
           platforms: linux/amd64,linux/arm64
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
